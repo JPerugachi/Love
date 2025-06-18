@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algo Especial Para Ti</title>
+    <style>
+        /* General */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #00ffea, #98c379); /* Fondo con gradiente */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden; /* Evita que los corazones se desborden */
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4); /* Sombra para el texto */
+            font-family: 'Georgia', serif;
+            animation: slideInFromTop 1s ease-out; /* Animación de entrada desde arriba */
+        }
+
+        .message {
+            font-size: 1.5em;
+            color: #f0f0f0;
+            max-width: 500px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-family: 'Tahoma', sans-serif;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out forwards, scaleText 1.5s ease-out 1s forwards; /* Animación de desvanecerse y escalar */
+        }
+        /* Botón */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: 'Verdana', sans-serif;
+            opacity: 0;
+            animation: fadeInUp 2.5s ease-out 0.5s forwards; /* Animación del botón con retraso */
+        }
+
+        .btn:hover {
+            background-color: #ff5733;
+            transform: scale(1.05); /* Efecto de aumento */
+        }
+
+        /* Nuevo estilo del popup */
+        .popup {
+            display: none; /* Está oculto por defecto */
+            position: fixed;
+            top: 45%;
+            left: 35%;
+            transform: translate(-50%, -50%); /* Centramos el popup */
+            background: rgb(255, 0, 0); /* Fondo suave con transparencia */
+            color: #fffcfc;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Sombra más suave */
+            max-width: 500px;
+            font-size: 1.5em;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8); /* Animación desde un tamaño pequeño */
+            transition: all 0.5s ease-out;
+        }
+
+        .popup.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1); /* Escala al tamaño normal */
+        }
+
+        .popup .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff1500;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .popup .close-btn:hover {
+            background-color: #ff5733;
+        }
+
+        /* Corazones animados en el fondo */
+        .heart {
+            position: absolute;
+            animation: heartFloat 5s infinite ease-in-out;
+            color: #ff6f61;
+            font-size: 40px;
+        }
+
+        .heart:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-duration: 5s;
+        }
+
+        .heart:nth-child(2) {
+            top: 30%;
+            left: 60%;
+            animation-duration: 7s;
+        }
+
+        .heart:nth-child(3) {
+            top: 60%;
+            left: 20%;
+            animation-duration: 6s;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-30px) scale(1.2);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Animaciones de entrada */
+        @keyframes slideInFromTop {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleText {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Corazones flotantes en el fondo -->
+    <div class="heart">❤️</div>
+    <div class="heart">💖</div>
+    <div class="heart">💘</div>
+    <div class="heart">❤️</div>
+    <div class="heart">💖</div>
+    <div class="heart">💘</div>
+    <div class="heart">❤️</div>
+    <div class="heart">💖</div>
+    <div class="heart">💘</div>
+    <div class="heart">❤️</div>
+
+    <h1>Algo Especial Para Ti</h1>
+    <p class="message">Hola Pau, esta página está hecha con mucho cariño. Haz clic en el botón de abajo para descubrir algo importante que quiero decirte...</p>
+
+    <button class="btn" onclick="revelarPopup()">Haz clic aquí</button>
+
+    <!-- Popup -->
+    <div class="popup" id="popupMensaje">
+        <p>Me gustas mucho Pau, esta bien sino sientes lo mismo solo quería decírtelo...</p>
+        <button class="close-btn" onclick="cerrarPopup()">Cerrar</button>
+    </div>
+
+    <script>
+        function revelarPopup() {
+            document.getElementById('popupMensaje').classList.add('show');
+            document.body.style.background = 'linear-gradient(135deg, #ffcccb, #ff6f61)'; // Cambio de fondo
+        }
+
+        function cerrarPopup() {
+            document.getElementById('popupMensaje').classList.remove('show');
+        }
+    </script>
+
+</body>
+</html>
